@@ -1,21 +1,45 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameCore
 {
-    public class TypeItemsConfig<T> : ScriptableObject where T : MapItem
+    [CreateAssetMenu(fileName = "ItemsConfig",
+        menuName = "Configs/TypeItemsConfig")]
+    public sealed class TypeItemsConfig : ScriptableObject
     {
-        [SerializeField]
-        private string _nameID;
+        public int Lenght => _itemsPrefabs.Length;
+
+        public string TypeName => _typeName;
 
         [SerializeField]
-        private T[] _itemsPrefabs;
+        private string _typeName;
+
+        [SerializeField]
+        private MapItem[] _itemsPrefabs;
+
+        public void Init(int count, out int id)
+        {
+            id = 0;
+
+            for (int i = 0; i < _itemsPrefabs.Length; i++)
+            {
+                id = i + count;
+                _itemsPrefabs[i].Init(id, _typeName);
+            }
+        }
 
         private void OnEnable()
         {
-            for (int i = 0; i < _itemsPrefabs.Length; i++)
+            if (_itemsPrefabs.Length > 0)
             {
-                _itemsPrefabs[i].Init(i, _nameID);
+                var firstType = _itemsPrefabs[0].GetType();
+
+                foreach (var item in _itemsPrefabs)
+                {
+                    if (item.GetType() != firstType)
+                    {
+                        throw new System.Exception($"not all items in {this} config have the same type!!");
+                    }
+                }
             }
         }
     }

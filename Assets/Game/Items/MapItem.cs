@@ -8,7 +8,7 @@ namespace GameCore
     {
         public int ID => _id;
 
-        public string TypeID => _typeID;
+        public string TypeName => _typeName;
 
         public (int x, int y) Size => _size;
 
@@ -25,12 +25,13 @@ namespace GameCore
 
         private (int x, int y) _size;
 
-        protected string _typeID;
+        private string _typeName;
 
-        public virtual void Init(int id, string nameID)
+
+        public virtual void Init(int id, string typeName)
         {
             _id = id;
-            _typeID = nameID;
+            _typeName = typeName;
             _size = (_maxSizeXY[0], _maxSizeXY[1]);
 
             if (_view != null)
@@ -40,11 +41,6 @@ namespace GameCore
                     throw new System.Exception($"the size {_size} is not equals to this object's view size {objectSize}");
                 }
             }
-        }
-
-        private void OnEnable()
-        {
-            Init(0, "b1");
         }
     }
 }
