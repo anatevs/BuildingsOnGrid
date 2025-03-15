@@ -12,9 +12,6 @@ namespace GameCore
         [SerializeField]
         private int[] _size = new int[2] {1, 1};
 
-        [SerializeField]
-        private int _cellSize = 1;
-
         private TileGridCalculations _gridCalculations;
 
         private int[,] _itemsGrid;
@@ -28,7 +25,7 @@ namespace GameCore
 
         private void InitGrid()
         {
-            _gridCalculations = new TileGridCalculations((_size[0], _size[1]), _cellSize);
+            _gridCalculations = new TileGridCalculations((_size[0], _size[1]));
 
             _itemsGrid = new int[_size[0], _size[1]];
 

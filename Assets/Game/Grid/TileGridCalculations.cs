@@ -6,14 +6,13 @@ namespace GameCore
     {
         private readonly (int x, int y) _mapSize;
 
-        private readonly int _cellSize;
+        private readonly int _cellSize = 1;
 
         private (int x, int y) _centerShift;
 
-        public TileGridCalculations((int x, int y) size, int cellSize)
+        public TileGridCalculations((int x, int y) size)
         {
             _mapSize = size;
-            _cellSize = cellSize;
 
             _centerShift = (
                 _mapSize.x / 2,
