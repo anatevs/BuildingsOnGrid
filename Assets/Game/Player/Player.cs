@@ -14,17 +14,17 @@ namespace GameCore
         [SerializeField]
         private LayerMask _groundLayer;
 
-        [SerializeField]
-        private PlayingGrid _grid;
+        private PlayingGrid _playingGrid;
 
         private InputController _input;
 
         private Camera _camera;
 
         [Inject]
-        private void Construct(InputController input)
+        private void Construct(InputController input, PlayingGrid playingGrid)
         {
             _input = input;
+            _playingGrid = playingGrid;
         }
 
         private void Awake()
@@ -55,9 +55,12 @@ namespace GameCore
                 if (Physics.Raycast(_camera.ScreenPointToRay(screenPos), out var hit, _groundLayer))
                 {
                     var pos = hit.point;
-                    var posInt = _grid.GetCellCoordinate(pos);
+                    var originPosInt = _playingGrid.GetTileOriginCoordinate(pos);
 
-                    _testItem.SetPosition(posInt);
+                    if (_playingGrid.IsAreaFree(_playingGrid.GetTileIndex(originPosInt), _testItem.Size))
+                    {
+                        _testItem.SetPosition(originPosInt);
+                    }
                 }
             }
         }
@@ -66,7 +69,7 @@ namespace GameCore
         {
             if (IsPointerHitGround(screenPos, out var pos))
             {
-                var posInt = _grid.GetCellCoordinate(pos);
+                var posInt = _playingGrid.GetTileOriginCoordinate(pos);
             }
         }
 

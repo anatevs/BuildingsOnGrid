@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameCore
 {
@@ -16,6 +17,10 @@ namespace GameCore
         [SerializeField]
         private MapItem[] _itemsPrefabs;
 
+        private readonly Dictionary<string, MapItem> _prefabs = new();
+
+        private readonly Dictionary<int, string> _idNames = new();
+
         public void Init(int count, out int id)
         {
             id = 0;
@@ -24,7 +29,21 @@ namespace GameCore
             {
                 id = i + count;
                 _itemsPrefabs[i].Init(id, _typeName);
+
+                _prefabs.Add(_itemsPrefabs[i].Name, _itemsPrefabs[i]);
+
+                _idNames.Add(id, _itemsPrefabs[i].Name);
             }
+        }
+
+        public MapItem GetPrefab(string name)
+        {
+            return _prefabs[name];
+        }
+
+        public MapItem GetPrefab(int id)
+        {
+            return _prefabs[_idNames[id]];
         }
 
         private void OnEnable()

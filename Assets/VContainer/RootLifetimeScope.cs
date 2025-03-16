@@ -1,4 +1,6 @@
 using Assets.Input;
+using GameManagement;
+using SaveLoad;
 using VContainer;
 using VContainer.Unity;
 
@@ -9,6 +11,10 @@ namespace GameSystem
         protected override void Configure(IContainerBuilder builder)
         {
             RegisterInput(builder);
+
+            RegisterSaveLoad(builder);
+
+            RegisterGameManagement(builder);
         }
 
         private void RegisterInput(IContainerBuilder builder)
@@ -16,6 +22,16 @@ namespace GameSystem
             builder.Register<InputController>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
+        }
+
+        private void RegisterSaveLoad(IContainerBuilder builder)
+        {
+            builder.Register<SaveLoadStorage>(Lifetime.Singleton);
+        }
+
+        private void RegisterGameManagement(IContainerBuilder builder)
+        {
+            builder.Register<ApplicationShutdown>(Lifetime.Singleton);
         }
     }
 }

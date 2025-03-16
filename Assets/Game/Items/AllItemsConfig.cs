@@ -10,21 +10,30 @@ namespace GameCore
         [SerializeField]
         TypeItemsConfig[] _typeConfigs;
 
-        private readonly Dictionary<int, string> _idItemTypeInfo = new Dictionary<int, string>();
+        private readonly Dictionary<int, MapItem> _idPrefabs = new();
 
-        public bool TryGetItemType(int id, out string itemType)
+        private readonly Dictionary<string, TypeItemsConfig> _typeItemsConfigs = new();
+
+        public MapItem GetPrefab(string typeName, string name) //load
         {
-            return _idItemTypeInfo.TryGetValue(id, out itemType);
+            return _typeItemsConfigs[typeName].GetPrefab(name);
         }
 
-        private void OnEnable()
+        public MapItem GetPrefab(int id) //in game session
+        {
+            return _idPrefabs[id];
+        }
+
+        public void Init()
         {
             int count = 1;
-            for (int i = 0;  i < _typeConfigs.Length; i++)
+            for (int i = 0; i < _typeConfigs.Length; i++)
             {
                 _typeConfigs[i].Init(count, out var id);
 
-                _idItemTypeInfo.Add(id, _typeConfigs[i].TypeName);
+                _idPrefabs.Add(id, _typeConfigs[i].GetPrefab(id));
+
+                _typeItemsConfigs.Add(_typeConfigs[i].TypeName, _typeConfigs[i]);
 
                 count += _typeConfigs.Length;
             }

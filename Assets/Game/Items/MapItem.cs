@@ -10,7 +10,13 @@ namespace GameCore
 
         public string TypeName => _typeName;
 
+        public string Name => _name;
+
         public (int x, int y) Size => _size;
+
+        public (int x, int z) Position { get; set; }
+
+        public (int x, int y) OriginIndex { get; set; }
 
         [SerializeField]
         private int[] _maxSizeXY = new int[2];
@@ -71,6 +77,12 @@ namespace GameCore
                 transform.position.y,
                 position.z + _shift.z
                 );
+        }
+
+        public (int x, int y) GetOriginIndex()
+        {
+            return ((int)(transform.position.x - _shift.x),
+                (int)(transform.position.z - _shift.z));
         }
     }
 }

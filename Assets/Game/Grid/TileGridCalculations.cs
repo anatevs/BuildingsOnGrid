@@ -34,6 +34,14 @@ namespace GameCore
             return new Vector2Int(x, y);
         }
 
+        public (int x, int y) TilePositionToIndex((int x, int z) pos)
+        {
+            var x = pos.x + _centerShift.x;
+            var y = pos.z + _centerShift.y;
+
+            return (x, y);
+        }
+
         public int GetCoordinateInt(float coordinate)
         {
             var res = coordinate / _cellSize;
