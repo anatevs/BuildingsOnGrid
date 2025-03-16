@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Drawing;
+using UnityEngine;
 
 namespace GameCore
 {
@@ -8,23 +9,26 @@ namespace GameCore
 
         public static bool IsObjectHasSize(GameObject parentObject, (int, int) sizeXZ, out (float, float) objectXZ)
         {
-            var size = GetCombinedSize(parentObject);
+            var bounds = GetBounds(parentObject);
 
-            objectXZ = (size.x, size.z);
-
-            Debug.Log(size);
-
-            return (CompareIntFloat(sizeXZ.Item1, size.x) && CompareIntFloat(sizeXZ.Item2, size.z));
+            return IsBoundsHaveSize(bounds, sizeXZ, out objectXZ);
         }
 
-        private static Vector3 GetCombinedSize(GameObject parentObject)
+        public static bool IsBoundsHaveSize(Bounds bounds, (int, int) sizeXZ, out (float, float) objectXZ)
+        {
+            objectXZ = (bounds.size.x, bounds.size.z);
+
+            return (CompareIntFloat(sizeXZ.Item1, bounds.size.x) && CompareIntFloat(sizeXZ.Item2, bounds.size.z));
+        }
+
+        public static Bounds GetBounds(GameObject parentObject)
         {
             Renderer[] renderers = parentObject.GetComponentsInChildren<Renderer>();
 
             if (renderers.Length == 0)
             {
                 Debug.LogWarning("No renderers found in this object!");
-                return Vector3.zero;
+                return default;
             }
 
             Bounds combinedBounds = renderers[0].bounds;
@@ -34,7 +38,7 @@ namespace GameCore
                 combinedBounds.Encapsulate(renderer.bounds);
             }
 
-            return combinedBounds.size;
+            return combinedBounds;
         }
 
         private static bool CompareIntFloat(int intVal, float floatVal)

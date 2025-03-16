@@ -6,7 +6,7 @@ namespace GameCore
         menuName = "Configs/TypeItemsConfig")]
     public sealed class TypeItemsConfig : ScriptableObject
     {
-        public int Lenght => _itemsPrefabs.Length;
+        public int Length => _itemsPrefabs.Length;
 
         public string TypeName => _typeName;
 

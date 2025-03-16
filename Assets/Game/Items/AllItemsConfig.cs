@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameCore
 {
-    [CreateAssetMenu(fileName = "ItemsConfig",
+    [CreateAssetMenu(fileName = "AllItemsConfig",
         menuName = "Configs/AllItemsConfig")]
     public sealed class AllItemsConfig : ScriptableObject
     {
@@ -19,7 +19,7 @@ namespace GameCore
 
         private void OnEnable()
         {
-            int count = 0;
+            int count = 1;
             for (int i = 0;  i < _typeConfigs.Length; i++)
             {
                 _typeConfigs[i].Init(count, out var id);

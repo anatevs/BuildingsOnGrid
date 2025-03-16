@@ -34,7 +34,7 @@ namespace GameCore
             return new Vector2Int(x, y);
         }
 
-        private int GetCoordinateInt(float coordinate)
+        public int GetCoordinateInt(float coordinate)
         {
             var res = coordinate / _cellSize;
 

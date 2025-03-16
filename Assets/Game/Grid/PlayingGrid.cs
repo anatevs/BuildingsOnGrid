@@ -5,10 +5,6 @@ namespace GameCore
 {
     public sealed class PlayingGrid : MonoBehaviour
     {
-        //public int MaxX => _gameElements.GetLength(0);
-
-        //public int MaxY => _gameElements.GetLength(1);
-
         [SerializeField]
         private int[] _size = new int[2] {1, 1};
 
@@ -70,6 +66,28 @@ namespace GameCore
             InitGrid();
 
             FillGrid();
+        }
+
+        public (int x, int z) GetCellCoordinate(Vector3 pos)
+        {
+            return (_gridCalculations.GetCoordinateInt(pos.x),
+                _gridCalculations.GetCoordinateInt(pos.z));
+        }
+
+        public bool IsAreaFree((int x, int y) origin, (int x, int y) size)
+        {
+            for (int i = origin.x; i < origin.x + size.x; i++)
+            {
+                for (var j = origin.y; j < origin.y + size.y; j++)
+                {
+                    if (_itemsGrid[i, j] != 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         //public void AddElement(Vector2Int index, PlaiyingElement element)

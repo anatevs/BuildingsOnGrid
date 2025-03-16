@@ -27,6 +27,14 @@ namespace GameCore
 
         private string _typeName;
 
+        private Bounds _bounds;
+
+        private (float x, float z) _shift;
+
+        private void Awake()
+        {
+            Init(0, "test");
+        }
 
         public virtual void Init(int id, string typeName)
         {
@@ -34,13 +42,35 @@ namespace GameCore
             _typeName = typeName;
             _size = (_maxSizeXY[0], _maxSizeXY[1]);
 
+            _shift = ((float)_size.x / 2, (float)_size.y / 2);
+
+            _bounds = ItemViewSize.GetBounds(_view);
+
             if (_view != null)
             {
-                if (!(ItemViewSize.IsObjectHasSize(_view, _size, out var objectSize)))
+                if (!(ItemViewSize.IsBoundsHaveSize(_bounds, _size, out var objectSize)))
                 {
                     throw new System.Exception($"the size {_size} is not equals to this object's view size {objectSize}");
                 }
             }
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = new Vector3(
+                position.x + _shift.x,
+                transform.position.y,
+                position.z + _shift.z
+                );
+        }
+
+        public void SetPosition((int x, int z) position)
+        {
+            transform.position = new Vector3(
+                position.x + _shift.x,
+                transform.position.y,
+                position.z + _shift.z
+                );
         }
     }
 }
