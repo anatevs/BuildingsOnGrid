@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameCore
@@ -7,7 +8,7 @@ namespace GameCore
         menuName = "Configs/TypeItemsConfig")]
     public sealed class TypeItemsConfig : ScriptableObject
     {
-        public int Length => _itemsPrefabs.Length;
+        public int Length => _itemConfigDatas.Length;
 
         public string TypeName => _typeName;
 
@@ -15,24 +16,34 @@ namespace GameCore
         private string _typeName;
 
         [SerializeField]
-        private MapItem[] _itemsPrefabs;
+        private ItemConfigData[] _itemConfigDatas;
 
         private readonly Dictionary<string, MapItem> _prefabs = new();
 
         private readonly Dictionary<int, string> _idNames = new();
 
-        public void Init(int count, out int id)
-        {
-            id = 0;
+        private readonly Dictionary<string, (Sprite main, Sprite active)> _nameSprites = new();
 
-            for (int i = 0; i < _itemsPrefabs.Length; i++)
+        public void Init(int count, out int[] idNumbers)
+        {
+            idNumbers = new int[_itemConfigDatas.Length];
+
+            var id = count;
+
+            for (int i = 0; i < _itemConfigDatas.Length; i++)
             {
                 id = i + count;
-                _itemsPrefabs[i].Init(id, _typeName);
 
-                _prefabs.Add(_itemsPrefabs[i].Name, _itemsPrefabs[i]);
+                idNumbers[i] = id;
 
-                _idNames.Add(id, _itemsPrefabs[i].Name);
+                _itemConfigDatas[i].Item.Init(id, _typeName);
+
+                _prefabs.Add(_itemConfigDatas[i].Item.Name, _itemConfigDatas[i].Item);
+
+                _idNames.Add(id, _itemConfigDatas[i].Item.Name);
+
+                _nameSprites.Add(_itemConfigDatas[i].Item.Name,
+                    (_itemConfigDatas[i].MenuSprite, _itemConfigDatas[i].ActiveSprite));
             }
         }
 
@@ -46,20 +57,35 @@ namespace GameCore
             return _prefabs[_idNames[id]];
         }
 
+        public (Sprite main, Sprite active) GetMenuSprite(string name)
+        {
+            return _nameSprites[name];
+        }
+
         private void OnEnable()
         {
-            if (_itemsPrefabs.Length > 0)
+            if (_itemConfigDatas.Length > 0)
             {
-                var firstType = _itemsPrefabs[0].GetType();
+                var firstType = _itemConfigDatas[0].Item.GetType();
 
-                foreach (var item in _itemsPrefabs)
+                foreach (var data in _itemConfigDatas)
                 {
-                    if (item.GetType() != firstType)
+                    if (data.Item.GetType() != firstType)
                     {
                         throw new System.Exception($"not all items in {this} config have the same type!!");
                     }
                 }
             }
         }
+    }
+
+    [Serializable]
+    public struct ItemConfigData
+    {
+        public MapItem Item;
+
+        public Sprite MenuSprite;
+
+        public Sprite ActiveSprite;
     }
 }

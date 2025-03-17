@@ -1,7 +1,9 @@
 using SaveLoad;
+using UI;
+
 namespace GameManagement
 {
-    public class StartGameManager
+    public sealed class StartGameManager
     {
         private readonly SaveLoadManager _saveLoadManager;
 

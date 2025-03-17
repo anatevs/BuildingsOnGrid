@@ -27,6 +27,9 @@ namespace GameSystem
         private void RegisterSaveLoad(IContainerBuilder builder)
         {
             builder.Register<SaveLoadStorage>(Lifetime.Singleton);
+
+            builder.RegisterEntryPoint<LoadingGame>()
+                .AsSelf();
         }
 
         private void RegisterGameManagement(IContainerBuilder builder)

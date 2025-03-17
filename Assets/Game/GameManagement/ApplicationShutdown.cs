@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameManagement
 {
-    public class ApplicationShutdown
+    public sealed class ApplicationShutdown
     {
         public void QuitApp()
         {

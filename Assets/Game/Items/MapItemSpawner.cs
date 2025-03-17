@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace GameCore
 {
-    public class MapItemSpawner
+    public sealed class MapItemSpawner
     {
         private readonly PlayingGrid _playingGrid;
 
-        private readonly AllItemsConfig _itemsConfig;
+        private readonly AllItemsConfig _allItemsConfig;
 
         private readonly ItemsTransforms _transforms;
 
@@ -19,8 +19,15 @@ namespace GameCore
             ItemsTransforms transforms)
         {
             _playingGrid = playingGrid;
-            _itemsConfig = itemsConfig;
+            _allItemsConfig = itemsConfig;
             _transforms = transforms;
+
+            (int start, int end) = _allItemsConfig.IDInterval;
+
+            for (int i = start; i <= end; i++)
+            {
+                _pools.Add(i, new Queue<MapItem>());
+            }
         }
 
         public void SpawnAndSet(OneMapItemData data)
@@ -28,11 +35,11 @@ namespace GameCore
             var item = InstantiateItem(data.TypeName, data.Name);
 
             InitSpawnedItem(item, _transforms.MapItemsParent);
-            item.transform.position = new Vector3(
-            data.Position.x, item.transform.position.y, data.Position.z);
 
-            item.Position = data.Position;
-            item.OriginIndex = data.OriginIndex;
+            item.SetPosition(data.Position, data.OriginIndex);
+
+            //item.OriginPosition = data.Position;
+            //item.OriginIndex = data.OriginIndex;
             _playingGrid.SetArea(data.OriginIndex, item.Size, item.ID);
         }
 
@@ -51,17 +58,17 @@ namespace GameCore
 
             item.transform.SetParent(_transforms.PoolParent);
 
-            if (!_pools.TryGetValue(item.ID, out var queue))
-            {
-                _pools.Add(item.ID, queue);
-            }
-
-            queue.Enqueue(item);
+            _pools[item.ID].Enqueue(item);
         }
 
         public MapItem InstantiateItem(string typeName, string name)
         {
-            var item = GameObject.Instantiate(_itemsConfig.GetPrefab(typeName, name));
+            var prefab = _allItemsConfig.GetPrefab(typeName, name);
+
+            var item = GameObject.Instantiate(prefab);
+
+            item.Init(prefab.ID, typeName);
+
             return item;
         }
 
@@ -69,7 +76,11 @@ namespace GameCore
         {
             if (!TryGetPrefabFromPool(id, out var item))
             {
-                item = GameObject.Instantiate(_itemsConfig.GetPrefab(id));
+                var prefab = _allItemsConfig.GetPrefab(id);
+
+                item = GameObject.Instantiate(prefab);
+
+                item.Init(id, prefab.TypeName);
             }
 
             return item;

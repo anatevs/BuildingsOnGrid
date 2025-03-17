@@ -18,7 +18,7 @@ namespace UI
 
         private void OnDisable()
         {
-            _button?.onClick.RemoveListener(MakeOnClick);
+            _button.onClick.RemoveListener(MakeOnClick);
         }
 
         private void MakeOnClick()

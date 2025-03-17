@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6406321400533069938}
   - component: {fileID: 1802665284601698639}
   - component: {fileID: 7424077368683917754}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 122233106742403972}
   - component: {fileID: 1594673753086552800}
   - component: {fileID: 5363755499115743679}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 856847000742442296}
   - component: {fileID: 1311496436054750001}
   - component: {fileID: 8213232876646927803}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6629776149956394336}
   - component: {fileID: 6527284644872956603}
-  m_Layer: 0
+  - component: {fileID: 4744629517843117118}
+  m_Layer: 7
   m_Name: Building (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,6 +298,27 @@ MonoBehaviour:
   _maxSizeXY: 0200000001000000
   _name: Building3
   _view: {fileID: 8953664794689427108}
+--- !u!65 &4744629517843117118
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572419787811386086}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 3, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4884546732690110235
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7017195375094076570}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cubes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +365,7 @@ GameObject:
   - component: {fileID: 5662601039772469229}
   - component: {fileID: 2920255605194210502}
   - component: {fileID: 5965963035739890782}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4834518814998726036}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ViewCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

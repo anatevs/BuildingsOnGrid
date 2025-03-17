@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameCore
@@ -14,9 +12,9 @@ namespace GameCore
 
         public (int x, int y) Size => _size;
 
-        public (int x, int z) Position { get; set; }
+        public (int x, int z) OriginPosition => _originPos;
 
-        public (int x, int y) OriginIndex { get; set; }
+        public (int x, int y) OriginIndex => _originIndex;
 
         [SerializeField]
         private int[] _maxSizeXY = new int[2];
@@ -37,10 +35,9 @@ namespace GameCore
 
         private (float x, float z) _shift;
 
-        private void Awake()
-        {
-            Init(0, "test");
-        }
+        private (int x, int z) _originPos;
+
+        private (int x, int y) _originIndex;
 
         public virtual void Init(int id, string typeName)
         {
@@ -61,22 +58,16 @@ namespace GameCore
             }
         }
 
-        public void SetPosition(Vector3 position)
+        public void SetPosition((int x, int z) originPosition, (int x, int y) originIndex)
         {
             transform.position = new Vector3(
-                position.x + _shift.x,
+                originPosition.x + _shift.x,
                 transform.position.y,
-                position.z + _shift.z
+                originPosition.z + _shift.z
                 );
-        }
 
-        public void SetPosition((int x, int z) position)
-        {
-            transform.position = new Vector3(
-                position.x + _shift.x,
-                transform.position.y,
-                position.z + _shift.z
-                );
+            _originPos = originPosition;
+            _originIndex = originIndex;
         }
 
         public (int x, int y) GetOriginIndex()

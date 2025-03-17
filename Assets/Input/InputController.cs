@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using VContainer.Unity;
 
@@ -9,7 +11,7 @@ namespace Assets.Input
         IInitializable,
         IDisposable
     {
-        public event Action<Vector2> OnClick;
+        public event Action<Vector2> OnClickGO;
 
         public Vector2 PointerPosition => _pointerPosition;
 
@@ -26,14 +28,14 @@ namespace Assets.Input
         {
             _controls.Enable();
 
-            _controls.Gameplay.Click.performed += Click;
+            _controls.Gameplay.Click.performed += ClickGO;
 
             _controls.Gameplay.FollowPointer.performed += Follow;
         }
 
         void IDisposable.Dispose()
         {
-            _controls.Gameplay.Click.performed -= Click;
+            _controls.Gameplay.Click.performed -= ClickGO;
 
             _controls.Gameplay.FollowPointer.performed -= Follow;
 
@@ -45,11 +47,26 @@ namespace Assets.Input
             _pointerPosition = context.ReadValue<Vector2>();
         }
 
-        private void Click(InputAction.CallbackContext context)
+        private void ClickGO(InputAction.CallbackContext context)
         {
             _pointerPosition = context.ReadValue<Vector2>();
 
-            OnClick?.Invoke(_pointerPosition);
+            if (!IsPointerOverUI(_pointerPosition))
+            {
+                OnClickGO?.Invoke(_pointerPosition);
+            }
+        }
+
+        private bool IsPointerOverUI(Vector2 pos)
+        {
+            PointerEventData eventData = new PointerEventData(EventSystem.current)
+            {
+                position = pos
+            };
+
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+            return results.Count > 0;
         }
     }
 }

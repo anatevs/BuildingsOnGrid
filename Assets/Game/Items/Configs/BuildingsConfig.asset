@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: BuildingsConfig
   m_EditorClassIdentifier: 
   _typeName: Buildings
-  _itemsPrefabs:
-  - {fileID: 6594463046793064785, guid: d18165eaf3cecb443bc19cc37ea89db3, type: 3}
-  - {fileID: 197110345356416220, guid: 8f1e9510d1e56e444aafdf467705e908, type: 3}
-  - {fileID: 7879425650969049836, guid: a9c8dae0967c3444786d638f66a2c9a7, type: 3}
-  - {fileID: 6527284644872956603, guid: 8c6608583162c1843a82a6e0377fa6b8, type: 3}
+  _itemConfigDatas:
+  - Item: {fileID: 6594463046793064785, guid: d18165eaf3cecb443bc19cc37ea89db3, type: 3}
+    MenuSprite: {fileID: 21300000, guid: 15e7dfbed1c535141bea4e992e6747de, type: 3}
+    ActiveSprite: {fileID: 21300000, guid: e7e58ea4c3747b249a913067d2fc9a4f, type: 3}
+  - Item: {fileID: 197110345356416220, guid: 8f1e9510d1e56e444aafdf467705e908, type: 3}
+    MenuSprite: {fileID: 21300000, guid: 19e65f59b8cc98a4d94dd6320eea2432, type: 3}
+    ActiveSprite: {fileID: 21300000, guid: 677e327110ee077438d1751a641aabd6, type: 3}
+  - Item: {fileID: 7879425650969049836, guid: a9c8dae0967c3444786d638f66a2c9a7, type: 3}
+    MenuSprite: {fileID: 21300000, guid: bd079cd3d799c004bae2cd975ccdba35, type: 3}
+    ActiveSprite: {fileID: 21300000, guid: a7f74c1a515c95445928c278c058ef2b, type: 3}
+  - Item: {fileID: 6527284644872956603, guid: 8c6608583162c1843a82a6e0377fa6b8, type: 3}
+    MenuSprite: {fileID: 21300000, guid: 052ef6c831341964e8ef16b41df4b7d7, type: 3}
+    ActiveSprite: {fileID: 21300000, guid: fab2373556533a44288932408fafd1e6, type: 3}

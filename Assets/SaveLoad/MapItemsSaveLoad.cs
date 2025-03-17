@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SaveLoad
 {
-    public class MapItemsSaveLoad :
+    public sealed class MapItemsSaveLoad :
         ISaveLoad
     {
         private readonly SaveLoadStorage _saveLoadStorage;
@@ -65,7 +65,7 @@ namespace SaveLoad
             return new OneMapItemData(
                 item.TypeName,
                 item.Name,
-                item.Position,
+                item.OriginPosition,
                 item.OriginIndex
                 );
         }
