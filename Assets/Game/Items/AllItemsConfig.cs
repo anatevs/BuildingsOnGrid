@@ -51,12 +51,12 @@ namespace GameCore
 
                 foreach (var id in idNumbers)
                 {
-                    _idPrefabs.Add(id, _typeConfigs[i].GetPrefab(id));
+                    _idPrefabs.TryAdd(id, _typeConfigs[i].GetPrefab(id));
 
                     _idInterval.end = id;
                 }
 
-                _typeItemsConfigs.Add(_typeConfigs[i].TypeName, _typeConfigs[i]);
+                _typeItemsConfigs.TryAdd(_typeConfigs[i].TypeName, _typeConfigs[i]);
 
                 count += _typeConfigs.Length;
             }

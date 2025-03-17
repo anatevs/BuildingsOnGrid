@@ -38,11 +38,11 @@ namespace GameCore
 
                 _itemConfigDatas[i].Item.Init(id, _typeName);
 
-                _prefabs.Add(_itemConfigDatas[i].Item.Name, _itemConfigDatas[i].Item);
+                _prefabs.TryAdd(_itemConfigDatas[i].Item.Name, _itemConfigDatas[i].Item);
 
-                _idNames.Add(id, _itemConfigDatas[i].Item.Name);
+                _idNames.TryAdd(id, _itemConfigDatas[i].Item.Name);
 
-                _nameSprites.Add(_itemConfigDatas[i].Item.Name,
+                _nameSprites.TryAdd(_itemConfigDatas[i].Item.Name,
                     (_itemConfigDatas[i].MenuSprite, _itemConfigDatas[i].ActiveSprite));
             }
         }

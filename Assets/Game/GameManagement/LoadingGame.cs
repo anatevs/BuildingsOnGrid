@@ -21,7 +21,9 @@ namespace GameManagement
         {
             _saveLoadStorage.LoadState();
 
-            //await SceneManager.LoadSceneAsync(_gameSceneID);
+            //SceneManager.LoadScene(_gameSceneID);
+
+            await SceneManager.LoadSceneAsync(_gameSceneID);
         }
     }
 }
