@@ -19,6 +19,10 @@ namespace Assets.Input
 
         private Vector2 _pointerPosition;
 
+        private readonly List<RaycastResult> _uiRaycastResults = new();
+
+        private readonly PointerEventData _pointerEventData = new(EventSystem.current);
+
         public InputController()
         {
             _controls = new GameControls();
@@ -59,14 +63,13 @@ namespace Assets.Input
 
         private bool IsPointerOverUI(Vector2 pos)
         {
-            PointerEventData eventData = new PointerEventData(EventSystem.current)
-            {
-                position = pos
-            };
+            _pointerEventData.position = pos;
 
-            var results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventData, results);
-            return results.Count > 0;
+            _uiRaycastResults.Clear();
+
+            EventSystem.current.RaycastAll(_pointerEventData, _uiRaycastResults);
+
+            return _uiRaycastResults.Count > 0;
         }
     }
 }
